@@ -47,14 +47,18 @@ let searchMovie = asyncMiddleware(async function(req, res) {
   // NOTE: Consulta de de movies
 
   let consulta = await api.buscarPelicula(title,type,year,page)
-  console.log(
-    "consulta---------------",consulta
-  );
 
   if (consulta.exitoso) {
+    consulta.elementInPage = consulta.Search.length
+    consulta.totalPage = consulta.totalResults/10
+    console.log(typeof consulta.Error);
     return respuesta(req, res, consulta, 201, false, null, "Datos directo de enpoint")
   }else {
-    return errorCliente(req, res, null, 200, false, 'ha ocurrido un error al enviar los datos al endpoint', 'Por favor valide que el titulo de consulta', 400)
+    if (typeof consulta.Error == 'string'){
+      return errorCliente(req, res, null, 200, false, 'No se consiguio la pelicula', consulta.Error, 400)
+    }else {
+      return errorCliente(req, res, null, 200, false, 'ha ocurrido un error al enviar los datos al endpoint', 'Por favor valide que el titulo de consulta', 400)
+    }
   }
 
 })

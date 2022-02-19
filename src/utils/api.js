@@ -28,7 +28,7 @@ function buscarPelicula(title,type,year,page) {
       variables = variables + '&' + 'y=' + year
     }
     if (page) {
-      variables = variables + '&' + 'page=' + page
+      variables = variables + '?' + 'page=' + page
     }
 
     console.log("ANTES:------------------------");
@@ -39,6 +39,9 @@ function buscarPelicula(title,type,year,page) {
       result.data.exitoso = true
       console.log("result.data");
       console.log(result.data);
+      if (result.data.Response == 'False') {
+        result.data.exitoso = false
+      }
       resolve(result.data)
     }).catch((err) => {
       err.response.data.exitoso = false
