@@ -22,13 +22,13 @@ function buscarPelicula(title,type,year,page) {
     let variables = "i=tt3896198&apikey=5eec5adc&s=" + title
 
     if (type) {
-      variables = variables + '?' + 'type=' + type
+      variables = variables + '&' + 'type=' + type
     }
     if (year) {
-      variables = variables + '?' + 'y=' + year
+      variables = variables + '&' + 'y=' + year
     }
     if (page) {
-      variables = variables + '?' + 'page=' + page
+      variables = variables + '&' + 'page=' + page
     }
 
     console.log("ANTES:------------------------");
