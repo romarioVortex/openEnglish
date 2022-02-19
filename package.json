@@ -1,0 +1,63 @@
+{
+  "name": "openEnglish-backend",
+  "version": "1.0.0",
+  "description": "Prueba Tecnia para Desarrollo con OpenEnglish",
+  "main": "index.js",
+  "scripts": {
+    "start:local": "nodemon index.js",
+    "start:prod": "NODE_ENV=production node index.js",
+    "serveprod": " npm run start:prod",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/romarioVortex/openEnglish"
+  },
+  "keywords": [
+    "Educacion",
+    "Node",
+    "aprendizaje",
+    "postgresql"
+  ],
+  "author": "VortexSoluciones",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/romarioVortex/openEnglish/issues"
+  },
+  "homepage": "https://github.com/romarioVortex/openEnglish#readme",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "bcrypt": "^5.0.1",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "defaults": "^1.0.3",
+    "dotenv": "^9.0.2",
+    "excel4node": "^1.7.2",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "install": "^0.13.0",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.1",
+    "multer": "^1.4.2",
+    "node-fetch": "^2.6.1",
+    "nodemailer": "^6.5.0",
+    "path": "^0.12.7",
+    "query-string": "^7.0.1",
+    "redis": "^3.0.2",
+    "request": "^2.88.2",
+    "sequelize": "^6.5.0",
+    "socket.io": "^4.0.0",
+    "url-parse": "^1.5.3",
+    "urlencode": "^1.1.0",
+    "utf8": "^3.0.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.14.0",
+    "@babel/node": "^7.13.13",
+    "@babel/preset-env": "^7.14.0",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.7"
+  }
+}
