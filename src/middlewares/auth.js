@@ -3,7 +3,7 @@
 const jwt = require('jsonwebtoken')
 /*const db = require('../models/dbConnectionModel')
 const dbConnect = require('../models/DAOs/db')
-const configpostgres = config().configpostgres*/
+const configmysql = config().configmysql*/
 const config = require('../config/config')
 const secret = config().secret
 const {
@@ -22,9 +22,9 @@ let Usuarios
 let sequelize
 
 const postgres = asyncMiddleware(async function() {
-  const services = await db(configpostgres)
+  const services = await db(configmysql)
   Usuarios = services.Usuarios
-  sequelize = await dbConnect(configpostgres)
+  sequelize = await dbConnect(configmysql)
 })
 
 postgres()

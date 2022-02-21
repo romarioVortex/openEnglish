@@ -18,7 +18,7 @@ const session = require('express-session')
 const routes = require('./src/routes');
 const bodyParser = require('body-parser')
 const morgan = require('morgan');
-//const db = require ('./src/models/DAOs/db')
+const db = require ('./src/models/DAOs/db')
 
 if (process.env.NODE_ENV == 'production') {
   https.createServer({
