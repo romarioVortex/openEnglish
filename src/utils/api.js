@@ -28,7 +28,7 @@ function buscarPelicula(title,type,year,page) {
       variables = variables + '&' + 'y=' + year
     }
     if (page) {
-      variables = variables + '?' + 'page=' + page
+      variables = variables + '&' + 'page=' + page
     }
 
     console.log("ANTES:------------------------");
