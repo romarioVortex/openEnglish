@@ -15,8 +15,8 @@ module.exports = function config() {
   const config = {
     encryptionMethod: 'AES-256-CBC',
     secretEncript: 'My32charPasswordAndInitVectorStr',
-    port: process.env.PORT || 3000,
-    portArchivos: 3001,
+    port: process.env.PORT || 3001,
+    portArchivos: 3000,
     hostArchivos: 'localhost',
     host: 'localhost',
     secure: false,
