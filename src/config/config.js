@@ -21,6 +21,8 @@ module.exports = function config() {
     host: 'localhost',
     secure: false,
     charset: 'utf8',
+    //Rango de paginacion
+    rango:15,
     operacionesemail: 'romario.restrepo@parquesoftbogota.com',
     configmysql: {
       database: process.env.DB_NAME || 'openenglish',

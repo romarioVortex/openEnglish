@@ -12,6 +12,7 @@ const config = require('../../config/config');
 const db = require('../../models/dbConnectionModel')
 const dbConnect = require('../../models/DAOs/db')
 const configmysql = config().configmysql
+const rango = config().rango
 const api = require('../../utils/api')
 const validators = require('../../utils/validators')
 
@@ -46,8 +47,12 @@ let searchMovie = asyncMiddleware(async function(req, res) {
     page
   } = req.query
 
-  if (title == '') {
+  if (title == '' || title == undefined) {
     return errorCliente(req, res, null, 200, false, 'No se consiguio la pelicula',"A title has not been written", 400)
+  }
+
+  if (page == '' || page == undefined) {
+    page = 1
   }
 
   // NOTE: inicializamos las condiciones de busqueda
@@ -55,10 +60,16 @@ let searchMovie = asyncMiddleware(async function(req, res) {
   let cond ={
     where : {
       Title:title,
-      movieType_id:type,
-      Year:year,
       page
     }
+  }
+
+  if (type != undefined) {
+    cond.where.movieType_id = type
+  }
+
+  if (year != undefined) {
+    cond.where.Year = year
   }
 
   // NOTE: Consultamos el total de registros para generar la pagina
@@ -69,7 +80,7 @@ let searchMovie = asyncMiddleware(async function(req, res) {
 
   let consulta = Movies.findAllByCond(cond)
 
-  cond.offset = pagina * rango
+  cond.offset = page * rango
   cond.limit = rango
 
   if (consulta != null) {
