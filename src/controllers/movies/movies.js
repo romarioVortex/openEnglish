@@ -15,7 +15,8 @@ const configmysql = config().configmysql
 const rango = config().rango
 const api = require('../../utils/api')
 const validators = require('../../utils/validators')
-const Op = require('sequelize').Op
+const Sequelize = require('sequelize')
+const Op = Sequelize.Op
 
 // NOTE: Import de modelos
 
@@ -48,20 +49,24 @@ let searchMovie = asyncMiddleware(async function(req, res) {
     page
   } = req.query
 
-  if (title == '' || title == undefined) {
-    return errorCliente(req, res, null, 200, false, 'No se consiguio la pelicula',"A title has not been written", 400)
-  }
+  // NOTE: Validaciones de datos recibidos del endpoint
 
   if (page == '' || page == undefined) {
     page = 1
   }
 
+  if (title === null || title === undefined) {
+    title = ''
+  }
+
   // NOTE: inicializamos las condiciones de busqueda
+
+  title = title.toLowerCase();
 
   let cond ={
     where : {
-      Title:{
-        [Op.like]:`%${title}%`
+      Title: {
+        [Op.like]: `%${title}%`
       }
     }
   }
@@ -76,11 +81,11 @@ let searchMovie = asyncMiddleware(async function(req, res) {
     }
   }
 
-  // NOTE: Consultamos el total de registros para generar la pagina
+  // NOTE: Consultamos el total de registros para generar la paginacion
 
   let cantidad = await Movies.countByCond(cond)
 
-  // NOTE: Consulta de de movies
+  // NOTE: Consulta de la base de datos
 
   cond.offset = page * rango
   cond.limit = rango
@@ -88,13 +93,9 @@ let searchMovie = asyncMiddleware(async function(req, res) {
   let consulta = await Movies.findAllByCond(cond)
 
   if (consulta != null) {
-    return respuesta(req, res, {consulta, totalPage : Math.floor(cantidad/10)}, 201, false, null, "Datos directo de enpoint")
+    return respuesta(req, res, {consulta, totalPage : Math.floor(cantidad/rango)}, 201, false, null, "Datos directo de enpoint")
   }else {
-    if (typeof consulta.Error == 'string'){
-      return errorCliente(req, res, null, 200, false, 'No se consiguio la pelicula', consulta.Error, 400)
-    }else {
-      return errorCliente(req, res, null, 200, false, 'ha ocurrido un error al enviar los datos al endpoint', 'Movie Not Found', 400)
-    }
+    return errorCliente(req, res, null, 200, false, 'ha ocurrido un error al enviar los datos al endpoint', 'Movie Not Found', 400)
   }
 
 })

@@ -39,7 +39,7 @@ module.exports = function config() {
           idle: 16000//tiempo para cerrar conecciones
       },*/
       // setup:false,   si setup esta en true borrara todas las base de datos y las bolvera a crear
-      //logging: s => console.log(s), //muestra todo lo de la base de datos
+      logging: s => console.log(s), //muestra todo lo de la base de datos
       define: {
         charset: 'utf8',
         collate: 'utf8_general_ci',
