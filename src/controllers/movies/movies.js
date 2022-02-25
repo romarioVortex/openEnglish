@@ -15,6 +15,7 @@ const configmysql = config().configmysql
 const rango = config().rango
 const api = require('../../utils/api')
 const validators = require('../../utils/validators')
+const Op = require('sequelize').Op
 
 // NOTE: Import de modelos
 
@@ -59,7 +60,9 @@ let searchMovie = asyncMiddleware(async function(req, res) {
 
   let cond ={
     where : {
-      Title:title
+      Title:{
+        [Op.like]:`%${title}%`
+      }
     }
   }
 
@@ -68,7 +71,9 @@ let searchMovie = asyncMiddleware(async function(req, res) {
   }
 
   if (year != undefined) {
-    cond.where.Year = year
+    cond.where.Year = {
+      [Op.like]:`%${year}%`
+    }
   }
 
   // NOTE: Consultamos el total de registros para generar la pagina
@@ -77,14 +82,13 @@ let searchMovie = asyncMiddleware(async function(req, res) {
 
   // NOTE: Consulta de de movies
 
-  let consulta = await Movies.findAllByCond(cond)
-
   cond.offset = page * rango
   cond.limit = rango
-console.log("consulta",consulta);
+
+  let consulta = await Movies.findAllByCond(cond)
+
   if (consulta != null) {
-    consulta.totalPage = cantidad/10
-    return respuesta(req, res, consulta, 201, false, null, "Datos directo de enpoint")
+    return respuesta(req, res, {consulta, totalPage : Math.floor(cantidad/10)}, 201, false, null, "Datos directo de enpoint")
   }else {
     if (typeof consulta.Error == 'string'){
       return errorCliente(req, res, null, 200, false, 'No se consiguio la pelicula', consulta.Error, 400)
