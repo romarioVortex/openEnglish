@@ -46,7 +46,10 @@ async function cargarBaseDatos(config) {
 
   // NOTE: Relaciones
 
-  setupMoviesMod.hasOne(setupMoviesTypesMod, {
+  setupMoviesMod.belongsTo(setupMoviesTypesMod, {
+    foreignKey: 'movieType_id'
+  })
+  setupMoviesTypesMod.hasOne(setupMoviesMod, {
     foreignKey: 'movieType_id'
   })
 

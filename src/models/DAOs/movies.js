@@ -4,7 +4,10 @@ const closeConnection = require('./db_close')
 module.exports = function setupMovies(Movies,MoviesTypes) {
 
   function findAllByCond(cond) {
-    cond.include = [MoviesTypes]
+    cond.include = [{
+      model:MoviesTypes,
+      attributes:['movieType']
+    }]
     cond.raw = false
     const result = Movies.findAll(cond)
 
