@@ -1,9 +1,11 @@
 'use strict'
 const closeConnection = require('./db_close')
 
-module.exports = function setupMovies(Movies) {
+module.exports = function setupMovies(Movies,MoviesTypes) {
 
   function findAllByCond(cond) {
+    cond.include = [MoviesTypes]
+    cond.raw = false
     const result = Movies.findAll(cond)
 
     // NOTE: Cierre de sesion

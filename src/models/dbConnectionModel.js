@@ -53,7 +53,7 @@ async function cargarBaseDatos(config) {
   // NOTE: Preparamos los servicios a exportar
 
   MoviesTypes = setupMoviesTypes(setupMoviesTypesMod)
-  Movies = setupMovies(setupMoviesMod)
+  Movies = setupMovies(setupMoviesMod,setupMoviesTypesMod)
 
   //  llave primaria o forenea realacion de modelos y agentes por un dato en especial
   //  const Agent = setupAgent(AgenteModel)
