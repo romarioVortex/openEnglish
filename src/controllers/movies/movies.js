@@ -58,8 +58,7 @@ let searchMovie = asyncMiddleware(async function(req, res) {
       movieType_id:type,
       Year:year,
       page
-    },
-    include
+    }
   }
 
   // NOTE: Consultamos el total de registros para generar la pagina
