@@ -59,8 +59,7 @@ let searchMovie = asyncMiddleware(async function(req, res) {
 
   let cond ={
     where : {
-      Title:title,
-      page
+      Title:title
     }
   }
 
@@ -74,24 +73,18 @@ let searchMovie = asyncMiddleware(async function(req, res) {
 
   // NOTE: Consultamos el total de registros para generar la pagina
 
-  let cantidad = Movies.countByCond(cond)
+  let cantidad = await Movies.countByCond(cond)
 
   // NOTE: Consulta de de movies
 
-  let consulta = Movies.findAllByCond(cond)
+  let consulta = await Movies.findAllByCond(cond)
 
   cond.offset = page * rango
   cond.limit = rango
-
+console.log("consulta",consulta);
   if (consulta != null) {
-    try {
-      consulta.elementInPage = consulta.Search.length
-      consulta.totalPage = cantidad/10
-      return respuesta(req, res, consulta, 201, false, null, "Datos directo de enpoint")
-    } catch (e) {
-      console.log(e);
-      return errorCliente(req, res, null, 200, false, 'No se consiguio la pelicula',"A title has not been written", 400)
-    }
+    consulta.totalPage = cantidad/10
+    return respuesta(req, res, consulta, 201, false, null, "Datos directo de enpoint")
   }else {
     if (typeof consulta.Error == 'string'){
       return errorCliente(req, res, null, 200, false, 'No se consiguio la pelicula', consulta.Error, 400)
