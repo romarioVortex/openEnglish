@@ -6,10 +6,12 @@ const setupDatabase = require('./DAOs/db')
 // NOTE:  Modelos
 
 const setupMoviesTypesModel = require('./modelsVo/moviesTypes')
+const setupMoviesModel = require('./modelsVo/movies')
 
 // NOTE:  DAOs
 
 const setupMoviesTypes = require('./DAOs/moviesTypes')
+const setupMovies = require('./DAOs/movies')
 
 // const setupMetric = require('./lib/metric')
 
@@ -18,6 +20,7 @@ const defautls = require('defaults')
 // const setup = require('./setup')
 
 let MoviesTypes
+let Movies
 
 async function cargarBaseDatos(config) {
   config = defautls(config, {
@@ -35,6 +38,7 @@ async function cargarBaseDatos(config) {
   // inicia la base de datos
   const sequelize = await setupDatabase(config)
   const setupMoviesTypesMod = await setupMoviesTypesModel(config)
+  const setupMoviesMod = await setupMoviesModel(config)
 
   // NOTE: Validacion de si la BD esta correcta
 
@@ -42,11 +46,14 @@ async function cargarBaseDatos(config) {
 
   // NOTE: Relaciones
 
-
+  setupMoviesMod.hasOne(setupMoviesTypesMod, {
+    foreignKey: 'movieType_id'
+  })
 
   // NOTE: Preparamos los servicios a exportar
 
   MoviesTypes = setupMoviesTypes(setupMoviesTypesMod)
+  Movies = setupMovies(setupMoviesMod)
 
   //  llave primaria o forenea realacion de modelos y agentes por un dato en especial
   //  const Agent = setupAgent(AgenteModel)
@@ -59,11 +66,15 @@ async function cargarBaseDatos(config) {
 }
 
 module.exports = async function(config) {
-  if (!MoviesTypes) {
+  if (
+    !MoviesTypes &&
+    !Movies
+  ) {
     await cargarBaseDatos(config)
   }
 
   return {
-    MoviesTypes
+    MoviesTypes,
+    Movies
   }
 }
