@@ -17,7 +17,7 @@ module.exports = function setupDatabase(config) {
       // NOTE: Sincronizacion forzada del sequelize
 
       sequelize.sync({
-        force: false
+        alter: true 
       }).then(() => {
         console.log("Todos los modelos Sincronizados correctamente.");
       }).catch(err => {
