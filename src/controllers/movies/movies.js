@@ -65,9 +65,7 @@ let searchMovie = asyncMiddleware(async function(req, res) {
 
   let cond ={
     where : {
-      Title: {
-        [Op.like]: `%${title}%`
-      }
+      Title: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('Title')), 'LIKE', '%' + title + '%')
     }
   }
 
@@ -95,7 +93,7 @@ let searchMovie = asyncMiddleware(async function(req, res) {
   if (consulta != null) {
     return respuesta(req, res, {consulta, totalPage : Math.floor(cantidad/rango)}, 201, false, null, "Datos directo de enpoint")
   }else {
-    return errorCliente(req, res, null, 200, false, 'ha ocurrido un error al enviar los datos al endpoint', 'Movie Not Found', 400)
+    return errorCliente(req, res, null, 200, false, 'No se ha encontrado ninguna peliculas', 'Movie Not Found', 400)
   }
 
 })
