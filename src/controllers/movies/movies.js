@@ -66,7 +66,10 @@ let searchMovie = asyncMiddleware(async function(req, res) {
   let cond ={
     where : {
       Title: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('Title')), 'LIKE', '%' + title + '%')
-    }
+    },
+    order:[
+      ['Title', 'DESC'],
+    ]
   }
 
   if (type != undefined) {
