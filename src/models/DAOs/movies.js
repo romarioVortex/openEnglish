@@ -81,7 +81,7 @@ module.exports = function setupMovies(Movies,MoviesTypes) {
   }
 
   async function countByCond(cond) {
-    const result = await Pedidos.count(cond)
+    const result = await Movies.count(cond)
     // NOTE: cierre de session despues de la consulta
 
     closeSession()

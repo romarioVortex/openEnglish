@@ -219,10 +219,9 @@ let fillDataBase = asyncMiddleware(async function(req, res) {
       for (let o in registrosPagina) {
         aux = false
         for (var p in imdbIDInBd) {
-          console.log("imdbIDInBd[p].imdbID ------------------------------------------------",imdbIDInBd[p].imdbID);
-          console.log("registrosPagina[o].imdbID------------------------------------------------",registrosPagina[o].imdbID);
-          console.log("imdbIDInBd[p] === registrosPagina[o].imdbID------------------------------------",imdbIDInBd[p] === registrosPagina[o].imdbID);
           if (imdbIDInBd[p].imdbID === registrosPagina[o].imdbID) {
+            console.log("imdbIDInBd[p].imdbID ------------------------------------------------",imdbIDInBd[p].imdbID);
+            console.log("registrosPagina[o].imdbID------------------------------------------------",registrosPagina[o].imdbID);
             if (aux) {
               registrosPagina.splice(o,1)
             }
