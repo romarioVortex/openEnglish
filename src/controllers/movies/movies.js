@@ -68,7 +68,7 @@ let searchMovie = asyncMiddleware(async function(req, res) {
       Title: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('Title')), 'LIKE', '%' + title + '%')
     },
     order:[
-      ['Title', 'DESC'],
+      ['Title', 'ASC'],
     ]
   }
 
